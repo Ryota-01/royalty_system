@@ -7,7 +7,7 @@ interface HeaderProps {
 export default function Header(props: HeaderProps) {
   const title = props.title;
   return (
-    <>
+    <header>
       <h2>{title}</h2>
       <ul>
         <li>
@@ -29,7 +29,7 @@ export default function Header(props: HeaderProps) {
           <a href="/royaltystatementinput">明細書作成</a>
         </li>
       </ul>
-    </>
+    </header>
   )
 }
 

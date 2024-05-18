@@ -1,10 +1,12 @@
 import React from "react";
 import Header from "../components/Header";
+import WritersListItem from "../components/WritersListItem";
 
 export default function WritersList() {
   return (
-    <div>
+    <>
       <Header title="WritersList" />
-    </div>
+      <WritersListItem />
+    </>
   );
 }

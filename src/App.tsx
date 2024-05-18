@@ -5,7 +5,7 @@ import PublishersList from './pages/PublishersList';
 import RegisterPublisher from './pages/RegisterPublisher';
 import RegisterWriter from './pages/RegisterWriter';
 import WritersList from './pages/WritersList';
-import InputRoyaltyStatement from './pages/InputRoyaltyStatement';
+import CreateRoyaltyStatement from './pages/CreateRoyaltyStatement';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Route path="/publisherregister" element={<RegisterPublisher />} />
         <Route path="/writerregister" element={<RegisterWriter />} />
         <Route path="/writers" element={<WritersList />} />
-        <Route path="/royaltystatementinput" element={<InputRoyaltyStatement />} />
+        <Route path="/royaltystatementinput" element={<CreateRoyaltyStatement />} />
       </Routes>
     </div>
   );
