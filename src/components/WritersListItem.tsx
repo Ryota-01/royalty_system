@@ -11,12 +11,12 @@ import TableRow from '@mui/material/TableRow';
 import { Box, Typography } from "@mui/material";
 
 type WriterData = {
-  companyName: string,
-  penName: string,
-  furigana: string,
-  writerName: string,
-  bankName: string,
-  branchName: string
+  所属事務所: string,
+  筆名: string,
+  フリガナ: string,
+  実名: string,
+  振込先銀行: string,
+  支店名: string
 }
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -62,7 +62,7 @@ export default function WritersListItem() {
             <StyledTableCell>実名</StyledTableCell>
             <StyledTableCell>筆名</StyledTableCell>
             <StyledTableCell>フリガナ</StyledTableCell>
-            <StyledTableCell>所属</StyledTableCell>
+            <StyledTableCell>所属事務所</StyledTableCell>
             <StyledTableCell>振込銀行</StyledTableCell>
             <StyledTableCell>振込支店</StyledTableCell>
           </TableRow>
@@ -70,13 +70,13 @@ export default function WritersListItem() {
         <TableBody>
           {writersData.length > 0 && (
             writersData.map((writer, index) => (
-              <StyledTableRow key={writer.writerName}>
-                <StyledTableCell >{writer.writerName}</StyledTableCell>
-                <StyledTableCell>{writer.penName}</StyledTableCell>
-                <StyledTableCell>{writer.furigana}</StyledTableCell>
-                <StyledTableCell>{writer.companyName}</StyledTableCell>
-                <StyledTableCell>{writer.bankName}</StyledTableCell>
-                <StyledTableCell>{writer.branchName}</StyledTableCell>
+              <StyledTableRow key={writer.実名}>
+                <StyledTableCell >{writer.実名}</StyledTableCell>
+                <StyledTableCell>{writer.筆名}</StyledTableCell>
+                <StyledTableCell>{writer.フリガナ}</StyledTableCell>
+                <StyledTableCell>{writer.所属事務所}</StyledTableCell>
+                <StyledTableCell>{writer.振込先銀行}</StyledTableCell>
+                <StyledTableCell>{writer.支店名}</StyledTableCell>
               </StyledTableRow>
             ))
           )}

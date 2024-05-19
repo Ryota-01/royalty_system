@@ -37,7 +37,11 @@ export default function RegisterPublisherForm() {
     } catch (e: any) {
       setIsCheckedError(true);
       console.error(e.message);
-      setErrorMessage("データの登録に失敗しました。");
+      if (e.message === "Quota exceeded.") {
+        setErrorMessage("データの保存容量が上限に達しました。管理者にお問合せください。");
+      } else {
+        setErrorMessage("データの登録に失敗しました。");
+      }
     }
   };
 
@@ -53,13 +57,13 @@ export default function RegisterPublisherForm() {
 
   return (
     <>
-      <Box sx={{ width: { xs: "90%", md: "64%" },  margin: "0 auto" }}>
+      <Box sx={{ width: { xs: "90%", md: "64%" }, margin: "0 auto" }}>
         {isCheckedError ? (<WarningBasicAlert message={errorMessage} />) : (<></>)}
       </Box>
       <Box sx={{ width: { xs: "90%", md: "64%" }, margin: "20px auto" }}>
         <form onSubmit={handleOnSubmit}>
           <Grid container rowSpacing={3}>
-            <Grid item md={12}>
+            <Grid item xs={12} md={12}>
               <TextField
                 {...inputValue("publisherName", "publisherName", "text", "出版社名", publisherNameRef).input}
                 required
@@ -68,14 +72,14 @@ export default function RegisterPublisherForm() {
                 fullWidth
               />
             </Grid>
-            <Grid item md={12}>
+            <Grid item xs={12} md={12}>
               <TextField
                 {...inputValue("furigana", "furigana", "text", "フリガナ", furiganaRef).input}
                 required
                 fullWidth
               />
             </Grid>
-            <Grid item md={12}>
+            <Grid item xs={12} md={12}>
               <TextField
                 {...inputValue("contact", "contact", "email", "連絡先メールアドレス", contactRef).input}
                 fullWidth

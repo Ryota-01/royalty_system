@@ -1,7 +1,7 @@
 import React, { RefObject, useRef, useState } from "react";
 import { db } from "../firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Button, Grid, Step, StepLabel, Stepper, TextField } from "@mui/material";
 import { WarningBasicAlert } from "./BasicAlert";
 import { useNavigate } from "react-router-dom";
 
@@ -16,54 +16,54 @@ export default function RegisterWriterForm() {
   const bankNameRef = useRef<HTMLInputElement>(null);
   const branchNameRef = useRef<HTMLInputElement>(null);
 
-  // const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   try {
-  //     const value = {
-  //       筆名: penNameRef.current?.value,
-  //       実名: writerNameRef.current?.value,
-  //       所属事務所: companyNameRef.current?.value,
-  //       フリガナ: furiganaRef.current?.value,
-  //       振込先銀行: bankNameRef.current?.value,
-  //       支店名: branchNameRef.current?.value,
-  //     };
-  //     const writerListCollectionRef = collection(db, "作家一覧");
-  //     const writerInfoDocRef = doc(writerListCollectionRef, `value.フリガナ`);
-  //     const docSnap = await getDoc(writerInfoDocRef);
-  //     if (!docSnap.exists()) {
-  //       // 同一名のドキュメントが存在しない場合の処理
-  //       await setDoc(writerInfoDocRef, value);
-  //       alert("作家情報を登録しました");
-  //       navigate("/home");
-  //     } else {
-  //       // 同一名のドキュメントが存在する場合の処理
-  //       setIsCheckedError(true);
-  //       setErrorMessage("すでに作家情報が存在しています。");
-  //     }
-  //   } catch (e: any) {
-  //     console.error(e.message);
-  //     if (e.message === "Quota exceeded.") {
-  //       setErrorMessage("データの保存容量が上限に達しました。管理者にお問合せください。");
-  //     } else {
-  //       setErrorMessage("データの登録に失敗しました。");
-  //     }
-  //     setIsCheckedError(true);
-  //   }
-  // };
-
-  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const value = {
-      筆名: penNameRef.current?.value,
-      実名: writerNameRef.current?.value,
-      所属事務所: companyNameRef.current?.value,
-      フリガナ: furiganaRef.current?.value,
-      振込先銀行: bankNameRef.current?.value,
-      支店名: branchNameRef.current?.value,
-    };
-    console.log(value);
-    navigate("/home", { state: value })
+    try {
+      const value = {
+        筆名: penNameRef.current?.value,
+        実名: writerNameRef.current?.value,
+        所属事務所: companyNameRef.current?.value,
+        フリガナ: furiganaRef.current?.value,
+        振込先銀行: bankNameRef.current?.value,
+        支店名: branchNameRef.current?.value,
+      };
+      const writerListCollectionRef = collection(db, "writers");
+      const writerInfoDocRef = doc(writerListCollectionRef, value.フリガナ);
+      const docSnap = await getDoc(writerInfoDocRef);
+      if (!docSnap.exists()) {
+        // 同一名のドキュメントが存在しない場合の処理
+        await setDoc(writerInfoDocRef, value);
+        alert("作家情報を登録しました");
+        navigate("/home");
+      } else {
+        // 同一名のドキュメントが存在する場合の処理
+        setIsCheckedError(true);
+        setErrorMessage("すでに作家情報が存在しています。");
+      }
+    } catch (e: any) {
+      console.error(e.message);
+      if (e.message === "Quota exceeded.") {
+        setErrorMessage("データの保存容量が上限に達しました。管理者にお問合せください。");
+      } else {
+        setErrorMessage("データの登録に失敗しました。");
+      }
+      setIsCheckedError(true);
+    }
   };
+
+  // const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const value = {
+  //     筆名: penNameRef.current?.value,
+  //     実名: writerNameRef.current?.value,
+  //     所属事務所: companyNameRef.current?.value,
+  //     フリガナ: furiganaRef.current?.value,
+  //     振込先銀行: bankNameRef.current?.value,
+  //     支店名: branchNameRef.current?.value,
+  //   };
+  //   console.log(value);
+  //   navigate("/home", { state: value })
+  // };
 
   const handleOnClick = () => {
   }
@@ -78,12 +78,27 @@ export default function RegisterWriterForm() {
     },
   });
 
+  const steps = [
+    '作家情報登録',
+    '取引先出版社登録',
+    '確認',
+  ]
+
   return (
     <>
-      <Box sx={{ width: { xs: "90%", md: "64%" }, margin: "0 auto" }}>
-        {isCheckedError ? (<WarningBasicAlert message={errorMessage} />) : (<></>)}
-      </Box>
       <Box sx={{ width: { xs: "90%", md: "64%" }, margin: "20px auto" }}>
+        <Box mb={5}>
+          <Stepper activeStep={0} alternativeLabel>
+            {steps.map((label) => (
+              <Step>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </Box>
+        <Box sx={{ width: "100%" }} mb={3}>
+          {isCheckedError ? (<WarningBasicAlert message={errorMessage} />) : (<></>)}
+        </Box>
         <form onSubmit={handleOnSubmit}>
           <Grid container columnSpacing={2} rowSpacing={3}>
             <Grid item xs={12} md={12}>
@@ -98,7 +113,6 @@ export default function RegisterWriterForm() {
               <TextField
                 {...inputValue("writerName", "writerName", "text", "実名", writerNameRef).input}
                 placeholder="印税太郎"
-                helperText="姓と名の間はスペースを空けず入力してください"
                 required
                 fullWidth
               />
@@ -113,7 +127,7 @@ export default function RegisterWriterForm() {
               />
             </Grid>
             <Grid item xs={12} md={12}>
-              <TextField {...inputValue("companyName", "companyName", "text", "法人名", companyNameRef).input}
+              <TextField {...inputValue("companyName", "companyName", "text", "所属事務所", companyNameRef).input}
                 helperText="所属事務所がある場合は入力してください"
                 fullWidth
               />

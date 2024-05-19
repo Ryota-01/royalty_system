@@ -35,7 +35,7 @@ export default function HomeMenuComponent() {
   ]
   return (
     <>
-      <Grid container columnSpacing={4} justifyContent="center" mb={4}>
+      <Grid container rowSpacing={{ xs: 3 }} columnSpacing={4} justifyContent="center" mb={4}>
         {menuItems.map((menuItem) => (
           <>
             {/* 作家関連のメニュー */}
@@ -58,7 +58,7 @@ export default function HomeMenuComponent() {
           </>
         ))}
       </Grid>
-      <Grid container columnSpacing={4} justifyContent="center" mt={4}>
+      <Grid container rowSpacing={{ xs: 3 }}  columnSpacing={4} justifyContent="center" mt={4}>
         {menuItems.map((menuItem) => (
           <>
             {/* 出版社関連のメニュー */}
