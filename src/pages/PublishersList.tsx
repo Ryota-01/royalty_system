@@ -5,7 +5,7 @@ import PublishersListItem from "../components/PublishersListItem";
 export default function PublishersList() {
   return (
     <>
-      <Header title="PublishersList" />
+      <Header title="PublishersList" discription="登録済みの出版社情報の一覧ページ"/>
       <PublishersListItem />
     </>
   );

@@ -5,7 +5,7 @@ import RegisterWriterForm from "../components/RegisterWriterForm";
 export default function RegisterWriter() {
   return (
     <>
-      <Header title="RegisterWriter" />
+      <Header title="Writer Register" discription="作家情報の登録ページ"/>
       <RegisterWriterForm />
     </>
 

@@ -5,7 +5,7 @@ import CreateRoyaltyStatementForm from "../components/CreateRoyaltyStatementForm
 export default function CreateRoyaltyStatement() {
   return (
     <>
-      <Header title="InputRoyaltyStatement" />
+      <Header title="Royalty Statement" discription="印税明細書作成ページ"/>
       <CreateRoyaltyStatementForm />
     </>
   );

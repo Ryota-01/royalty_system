@@ -5,7 +5,7 @@ import WritersListItem from "../components/WritersListItem";
 export default function WritersList() {
   return (
     <>
-      <Header title="WritersList" />
+      <Header title="Writers" discription="登録済みの作家情報の一覧ページ" />
       <WritersListItem />
     </>
   );
