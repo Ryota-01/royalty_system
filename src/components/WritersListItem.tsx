@@ -56,15 +56,15 @@ export default function WritersListItem() {
   console.log(writersData)
   return (
     <TableContainer>
-      <Table sx={{ width: "80%", margin: "20px auto", padding: "0 12px" }} aria-label="customized table">
+      <Table sx={{ width: { xs:"95%", md: "80%"}, margin: "20px auto", padding: "0 12px" }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>実名</StyledTableCell>
             <StyledTableCell>筆名</StyledTableCell>
             <StyledTableCell>フリガナ</StyledTableCell>
             <StyledTableCell>所属事務所</StyledTableCell>
-            <StyledTableCell>振込銀行</StyledTableCell>
-            <StyledTableCell>振込支店</StyledTableCell>
+            <StyledTableCell>振込先</StyledTableCell>
+            <StyledTableCell>支店名</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
