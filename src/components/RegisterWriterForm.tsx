@@ -1,7 +1,7 @@
 import React, { RefObject, useRef, useState } from "react";
 import { db } from "../firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
-import { Box, Button, Grid, Step, StepLabel, Stepper, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid, Step, StepLabel, Stepper, TextField, Typography } from "@mui/material";
 import { WarningBasicAlert } from "./BasicAlert";
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +14,11 @@ type RegisterWriterData = {
   支店名?: string;
 };
 
+type RegisterPublisherData = {
+  出版社名?: string;
+  マネジメント料率?: string;
+}
+
 export default function RegisterWriterForm() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isCheckedError, setIsCheckedError] = useState(false);
@@ -24,7 +29,12 @@ export default function RegisterWriterForm() {
     フリガナ: '',
     振込先銀行: '',
     支店名: '',
-  }); const [activeStep, setActiveStep] = useState(0);
+  });
+  const [registerPublisherData, setRegisterPublisherData] = useState<RegisterPublisherData>({
+    出版社名: "",
+    マネジメント料率: "",
+  });
+  const [activeStep, setActiveStep] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true)
   const navigate = useNavigate();
   const penNameRef = useRef<HTMLInputElement>(null);
@@ -33,6 +43,8 @@ export default function RegisterWriterForm() {
   const furiganaRef = useRef<HTMLInputElement>(null);
   const bankNameRef = useRef<HTMLInputElement>(null);
   const branchNameRef = useRef<HTMLInputElement>(null);
+  const publisherRef = useRef<HTMLInputElement>(null);
+  const percentageRef = useRef<HTMLInputElement>(null);
 
   // const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   //   e.preventDefault();
@@ -81,6 +93,24 @@ export default function RegisterWriterForm() {
     setRegisterWriterData(value);
     console.log(registerWriterData)
     setActiveStep(activeStep + 1);
+  }
+  console.log(registerWriterData)
+  console.log(registerPublisherData)
+
+  const handleRegisterPublisher = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+
+      const value = {
+        出版社名: publisherRef.current?.value,
+        マネジメント料率: percentageRef.current?.value,
+      }
+      setRegisterPublisherData(value);
+      setActiveStep(activeStep + 1);
+      console.log(registerPublisherData);
+    } catch (e: any) {
+      console.error(e.message);
+    }
   }
 
   const handleBack = () => {
@@ -185,10 +215,14 @@ export default function RegisterWriterForm() {
                     fullWidth
                   />
                 </Grid>
-                <Grid item>
-                  <Button type="submit" variant="contained">REGISTER</Button>
-                </Grid>
-                <Grid item>
+                <Grid
+                  container
+                  justifyContent="center"
+                  mt={5}
+                >
+                  <Box ml={1}>
+                    <Button type="submit" variant="contained" fullWidth>NEXT</Button>
+                  </Box>
                 </Grid>
               </Grid>
             </form>
@@ -197,38 +231,139 @@ export default function RegisterWriterForm() {
         {activeStep === 1 &&
           <>
             <Box textAlign="center" padding="36px 0">
-              <Typography variant="body1">
+              <Typography color="textSecondary" variant="body1">
                 取引先の出版社を入力してください
               </Typography>
             </Box>
-            <Grid container columnSpacing={2} rowSpacing={3}>
-              <Grid item xs={12} md={2}>
-                <Typography>出版社1</Typography>
+            <form onSubmit={handleRegisterPublisher}>
+              <Grid container columnSpacing={3} rowSpacing={3} alignItems="center">
+                <Grid item alignItems="center">
+                  <Typography>出版社1</Typography>
+                </Grid>
+                <Grid item xs={12} md={8}>
+                  <TextField
+                    placeholder="株式会社○○"
+                    label="取引先出版社名"
+                    size="small"
+                    inputRef={publisherRef}
+                    required
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} md={2}>
+                  <TextField
+                    placeholder="20%"
+                    label="マネジメント率"
+                    size="small"
+                    inputRef={percentageRef}
+                    required
+                    fullWidth
+                    defaultValue="%"
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={8}>
-                <TextField
-                  placeholder="○○株式会社"
-                  helperText="出版社名を正式名称で入力してください"
-                  label="取引先出版社名"
-                  required
-                  fullWidth
-                />
+              <Grid
+                container
+                justifyContent="center"
+                mt={5}
+              >
+                <Box mr={1}>
+                  <Button variant="contained" fullWidth onClick={handleBack}>Back</Button>
+                </Box>
+                <Box ml={1}>
+                  <Button type="submit" variant="contained" fullWidth>NEXT</Button>
+                </Box>
               </Grid>
-              <Grid item xs={12} md={2}>
-                <TextField
-                  placeholder="20%"
-                  label="マネジメント率"
-                  required
-                  fullWidth
-                />
-              </Grid>
+            </form>
+          </>
+        }
+        {activeStep === 2 &&
+          <>
+            <Box textAlign="center" padding="36px 0">
+              <Typography color="textSecondary" variant="body1">
+                以下の内容で登録しますか？
+              </Typography>
+            </Box>
+            <Grid container justifyContent="center">
+              <Typography color="textSecondary" variant="body1">
+                筆名：
+              </Typography>
+              <Typography color="textSecondary" variant="body1">
+                {registerWriterData.筆名}
+              </Typography>
+            </Grid>
+            <Grid container justifyContent="center">
+              <Typography color="textSecondary" variant="body1">
+                実名：
+              </Typography>
+              <Typography color="textSecondary" variant="body1">
+                {registerWriterData.実名}
+              </Typography>
+            </Grid>
+            <Grid container justifyContent="center">
+              <Typography color="textSecondary" variant="body1">
+                フリガナ：
+              </Typography>
+              <Typography color="textSecondary" variant="body1">
+                {registerWriterData.フリガナ}
+              </Typography>
+            </Grid>
+            <Grid container justifyContent="center">
+              <Typography color="textSecondary" variant="body1">
+                所属事務所：
+              </Typography>
+              <Typography color="textSecondary" variant="body1">
+                {registerWriterData.所属事務所}
+              </Typography>
+            </Grid>
+            <Grid container justifyContent="center">
+              <Typography color="textSecondary" variant="body1">
+                振込先銀行：
+              </Typography>
+              <Typography color="textSecondary" variant="body1">
+                {registerWriterData.振込先銀行}
+              </Typography>
+            </Grid>
+            <Grid container justifyContent="center">
+              <Typography color="textSecondary" variant="body1">
+                支店名：
+              </Typography>
+              <Typography color="textSecondary" variant="body1">
+                {registerWriterData.支店名}
+              </Typography>
+            </Grid>
+            <Divider />
+            <Grid container justifyContent="center">
+              <Typography color="textSecondary" variant="body1">
+                出版社名：
+              </Typography>
+              <Typography color="textSecondary" variant="body1">
+                {registerPublisherData.出版社名}
+              </Typography>
+            </Grid>
+            <Grid container justifyContent="center">
+              <Typography color="textSecondary" variant="body1">
+                マネジメント料率：
+              </Typography>
+              <Typography color="textSecondary" variant="body1">
+                {registerPublisherData.マネジメント料率}
+              </Typography>
             </Grid>
           </>
         }
-        <Button variant="contained" disabled={isDisabled} onClick={handleBack}>Back</Button>
-        <Button variant="contained" onClick={handleNext}>NEXT</Button>
-
-      </Box>
+        <Grid
+          container
+          justifyContent="center"
+          mt={5}
+        >
+          {/* <Box mr={1}>
+            <Button variant="contained" fullWidth disabled={isDisabled} onClick={handleBack}>Back</Button>
+          </Box>
+          <Box ml={1}>
+            <Button variant="contained" fullWidth onClick={handleNext}>NEXT</Button>
+          </Box> */}
+        </Grid>
+      </Box >
     </>
   );
 }
