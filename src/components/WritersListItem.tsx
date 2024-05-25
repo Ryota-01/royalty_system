@@ -10,13 +10,23 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Box, Typography } from "@mui/material";
 
+type RegisterWriterData = {
+  所属事務所?: string,
+  筆名?: string,
+  フリガナ?: string,
+  実名?: string,
+  振込先?: string,
+  支店名?: string
+}
+
+type RegisterPublisherData = {
+  出版社?: string,
+  マネジメント料率?: string,
+}
+
 type WriterData = {
-  所属事務所: string,
-  筆名: string,
-  フリガナ: string,
-  実名: string,
-  振込先銀行: string,
-  支店名: string
+  registerWriterData: RegisterWriterData,
+  registerPublisherData: RegisterPublisherData
 }
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -45,7 +55,7 @@ export default function WritersListItem() {
       try {
         const writersCollectionRef = collection(db, "writers");
         const getWritersItem = await getDocs(writersCollectionRef);
-        const getWritersData: any = getWritersItem.docs.map((doc) => doc.data());
+        const getWritersData: any = getWritersItem.docs.map((doc) => doc.data() as RegisterWriterData);
         setWritersData(getWritersData);
       } catch (e: any) {
         console.error(e.message);
@@ -53,10 +63,10 @@ export default function WritersListItem() {
     }
     fetchWriters();
   }, [])
-  console.log(writersData)
+
   return (
     <TableContainer>
-      <Table sx={{ width: { xs:"95%", md: "80%"}, margin: "20px auto", padding: "0 12px" }} aria-label="customized table">
+      <Table sx={{ width: { xs: "95%", md: "80%" }, margin: "20px auto", padding: "0 12px" }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>実名</StyledTableCell>
@@ -69,16 +79,19 @@ export default function WritersListItem() {
         </TableHead>
         <TableBody>
           {writersData.length > 0 && (
-            writersData.map((writer, index) => (
-              <StyledTableRow key={writer.実名}>
-                <StyledTableCell >{writer.実名}</StyledTableCell>
-                <StyledTableCell>{writer.筆名}</StyledTableCell>
-                <StyledTableCell>{writer.フリガナ}</StyledTableCell>
-                <StyledTableCell>{writer.所属事務所}</StyledTableCell>
-                <StyledTableCell>{writer.振込先銀行}</StyledTableCell>
-                <StyledTableCell>{writer.支店名}</StyledTableCell>
-              </StyledTableRow>
-            ))
+            writersData.map((writer, index) => {
+              const writerInfo = writer.registerWriterData || {};
+              return (
+                <StyledTableRow key={writerInfo.実名 || index}>
+                  <StyledTableCell >{writerInfo.実名}</StyledTableCell>
+                  <StyledTableCell>{writerInfo.筆名}</StyledTableCell>
+                  <StyledTableCell>{writerInfo.フリガナ}</StyledTableCell>
+                  <StyledTableCell>{writerInfo.所属事務所}</StyledTableCell>
+                  <StyledTableCell>{writerInfo.振込先}</StyledTableCell>
+                  <StyledTableCell>{writerInfo.支店名}</StyledTableCell>
+                </StyledTableRow>
+              )
+            })
           )}
         </TableBody>
       </Table>
