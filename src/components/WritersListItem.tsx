@@ -74,7 +74,6 @@ export default function WritersListItem() {
             <StyledTableCell>フリガナ</StyledTableCell>
             <StyledTableCell>所属事務所</StyledTableCell>
             <StyledTableCell>振込先</StyledTableCell>
-            <StyledTableCell>支店名</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -87,8 +86,9 @@ export default function WritersListItem() {
                   <StyledTableCell>{writerInfo.筆名}</StyledTableCell>
                   <StyledTableCell>{writerInfo.フリガナ}</StyledTableCell>
                   <StyledTableCell>{writerInfo.所属事務所}</StyledTableCell>
-                  <StyledTableCell>{writerInfo.振込先}</StyledTableCell>
-                  <StyledTableCell>{writerInfo.支店名}</StyledTableCell>
+                  <StyledTableCell>
+                    {writerInfo.振込先}　{writerInfo.支店名}
+                  </StyledTableCell>
                 </StyledTableRow>
               )
             })

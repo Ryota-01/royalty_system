@@ -10,6 +10,11 @@ type RegisterWritersWithPublishersProps = {
   activeStep: number;
 }
 
+type RegisterPublisherData = {
+  出版社?: string;
+  マネジメント料率?: string;
+}
+
 type FormValues = {
   writersWithPublishersData: {
     出版社: string;
@@ -17,7 +22,7 @@ type FormValues = {
   }[];
 };
 
-export default function RegisterWritersWithPublishers(props: RegisterWritersWithPublishersProps) {
+export default function RegisterWriterWithPublishers(props: RegisterWritersWithPublishersProps) {
   const setActiveStep = props.setActiveStep;
   const setIsCheckedError = props.setIsCheckedError;
   const setErrorMessage = props.setErrorMessage;
@@ -36,31 +41,8 @@ export default function RegisterWritersWithPublishers(props: RegisterWritersWith
     // keyName: "key", // デフォルトはidだが、keyに変更
   })
 
-  // 取引先出版社を登録
-  // const handleRegisterPublisher = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   try {
-  //     const value = {
-  //       出版社: publisherRef.current?.value,
-  //       マネジメント料率: percentageRef.current?.value,
-  //     }
-  //     setRegisterPublisherData(value);
-  //     console.log(value);
-  //     // setActiveStep(2);
-  //   } catch (e: any) {
-  //     setIsCheckedError(true);
-  //     setErrorMessage(e.message);
-  //     console.error(e.message);
-  //   }
-  // }
-
   const handleRegisterPublisher = (data: FormValues) => {
-    console.log(data.writersWithPublishersData);
     try {
-      // const value = {
-      //   出版社: publisherRef.current?.value,
-      //   マネジメント料率: percentageRef.current?.value,
-      // }
       setRegisterPublisherData(data.writersWithPublishersData);
       setActiveStep(2);
     } catch (e: any) {

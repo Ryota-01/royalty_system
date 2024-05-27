@@ -2,9 +2,9 @@ import React, { RefObject, useRef, useState } from "react";
 import { db } from "../firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { Box, Button, Divider, Grid, TextField } from "@mui/material";
-import { WarningBasicAlert } from "./BasicAlert";
+import { ErrorBasicAlert } from "./BasicAlert";
 import { formItems } from "./CreateRoyaltyStatementFormItems";
-
+import InputWithholdingTaxFormTable from "./InputWithholdingTaxFormTable";
 
 export default function CreateRoyaltyStatementForm() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -83,71 +83,158 @@ export default function CreateRoyaltyStatementForm() {
     setIsFocus(false);
   }
 
+  const styles = {
+    table: {
+      width: "50%",
+      borderCollapse: "collapse" as "collapse",
+    },
+    thead: {
+      fontWeight: "normal"
+    },
+    td: {
+      backgroundColor: "#E5E5E5",
+      padding: "22px 25px",
+      fontSize: "0.9rem"
+    },
+    th: {
+      fontWeight: "normal",
+      backgroundColor: "#E5E5E5",
+      fontSize: "0.9rem",
+      padding: "10px 0",
+    },
+    leftth: {
+      width: "80px",
+      fontWeight: "normal",
+      backgroundColor: "#E5E5E5",
+      fontSize: "0.9rem",
+      letterSpacing: "1px",
+    },
+    input: {
+      width: "100%",
+      border: "none",
+      padding: "4px "
+    }
+  }
+
+  // function replaceFormatNumber(numberText: any) {
+  //   if (!numberText) {
+  //     return;
+  //   }
+  //   return String(numberText).replace(/\d+/, function (m) {
+  //     return m.replace(/(\d)(?=(?:\d{3})+$)/g, "$1,");
+  //   })
+  // }
+
+  // function replaceNumberText(formatNumber: any) {
+  //   if (!formatNumber) {
+  //     return "";
+  //   }
+  //   return formatNumber.replace(/,/g, '');
+  // }
+
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   let value = e.target.value;
+  //   // カンマ区切りされた文字列をフラットな数字列に変換
+  //   value = String(replaceNumberText(value));
+  //   value = replaceFormatNumber(value);
+  //   return value;
+  // }
+
   return (
     <>
       <form onSubmit={handleOnSubmit}>
-        <Box sx={{ width: { xs: "90%", md: "90%" }, margin: "20px auto" }}>
+        <Box sx={{ width: "92%", margin: "20px auto" }}>
           {isCheckedError &&
             <Box mb={2}>
-              <WarningBasicAlert message={errorMessage} />
+              <ErrorBasicAlert message={errorMessage} />
             </Box>
           }
-          <Grid container columnSpacing={{ xs: 2, sm: 2, md: 2 }} mb={2}>
-            <Grid item md={4}>
-              <TextField
-                name="writerName"
-                id="writerName"
-                type="text"
-                label="作家名"
-                inputRef={writerRef}
-                placeholder="INZEI TARO"
-                size="small"
-                variant="standard"
-                required
-                fullWidth
-              />
-            </Grid>
-            <Grid item md={4}>
-              <TextField
-                name="dateoftransfer"
-                id="dateoftransfer"
-                type="date"
-                label="振込日"
-                inputRef={dateofTransferRef}
-                placeholder=""
-                variant="standard"
-                size="small"
-                required
-                fullWidth
-              />
-            </Grid>
-          </Grid>
-          <Divider sx={{ margin: "42px 0" }} />
-          <Grid container rowSpacing={2} columnSpacing={{ xs: 2, sm: 2, md: 2 }}>
-            {formItems.map((item) => (
-              <Grid key={item.id} item xs={12} md={item.spacing}>
-                <TextField
-                  name={item.name}
-                  id={item.id}
-                  type={item.type}
-                  label={item.label}
-                  inputRef={refs[item.name]}
-                  placeholder={item.placeholder}
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  defaultValue={refs[item.name].current?.value}
-                  fullWidth
-                  variant="standard"
-                  margin="dense"
-                  required={item.required}
-                />
-              </Grid>
-            ))}
-            <Grid item>
-              <Button type="submit" variant="contained">登録</Button>
-            </Grid>
-          </Grid>
-          <p>{Number(depositsRef.current?.value).toLocaleString()}</p>
+          <table style={styles.table}>
+            <tbody>
+              <tr>
+                <th scope="row" style={styles.leftth}>
+                  <label htmlFor="dateoftransfer">振込日</label>
+                </th>
+                <td style={styles.td}>
+                  <input
+                    name="dateoftransfer"
+                    id="dateoftransfer"
+                    type="date"
+                    ref={dateofTransferRef}
+                    required
+                    style={styles.input}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" style={styles.leftth}>
+                  <label htmlFor="writerName">作家名</label>
+                </th>
+                <td style={styles.td}>
+                  <input
+                    name="writerName"
+                    id="writerName"
+                    type="text"
+                    ref={writerRef}
+                    placeholder="INZEI TARO"
+                    style={styles.input}
+                    required
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <InputWithholdingTaxFormTable />
+          {/* <table style={inputWithholdingTaxFormStyle("100%").table}>
+            <thead style={styles.thead}>
+              <tr>
+                <th scope="col" style={inputWithholdingTaxFormStyle("5%").th}></th>
+                <th scope="col" style={inputWithholdingTaxFormStyle("8%").th}>入金日</th>
+                <th scope="col" style={inputWithholdingTaxFormStyle("25%").th}>出版社</th>
+                <th scope="col" style={inputWithholdingTaxFormStyle("10%").th}>発生額</th>
+                <th scope="col" style={inputWithholdingTaxFormStyle("8%").th}>消費税</th>
+                <th scope="col" style={inputWithholdingTaxFormStyle("8%").th}>源泉徴収税額</th>
+                <th scope="col" style={inputWithholdingTaxFormStyle("8%").th}>差引金額</th>
+                <th scope="col" style={inputWithholdingTaxFormStyle("5%").th}>料率</th>
+                <th scope="col" style={inputWithholdingTaxFormStyle("8%").th}>マネジメント料</th>
+                <th scope="col" style={inputWithholdingTaxFormStyle("8%").th}>振込金額</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th rowSpan={2} style={inputWithholdingTaxFormStyle("20px").leftth}>
+                  No.1
+                </th>
+                {formItems.map((item) => (
+                  <td key={item.id} style={inputWithholdingTaxFormStyle("").td}>
+                    <input
+                      name={item.name}
+                      id={item.id}
+                      type={item.type}
+                      ref={refs[item.name]}
+                      placeholder={item.placeholder}
+                      // onFocus={handleFocus}
+                      // onBlur={handleBlur}
+                      defaultValue={refs[item.name].current?.value}
+                      required={item.required}
+                      style={{
+                        width: "100%",
+                        border: "none",
+                        padding: "5px",
+                        textAlign: item.type === "tel" ? "right" : "left",
+                      }}
+                    />
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td colSpan={9} style={inputWithholdingTaxFormStyle("").td}>
+                  <input type="text" placeholder="MEMO" style={inputWithholdingTaxFormStyle("90%").input} />
+                </td>
+              </tr>
+            </tbody>
+          </table> */}
+          <Button type="submit">登録</Button>
         </Box>
       </form >
     </>

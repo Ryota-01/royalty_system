@@ -1,5 +1,5 @@
 import React, { RefObject, useRef } from "react";
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Button, Divider, Grid, TextField, Typography } from "@mui/material";
 import { db } from "../firebase";
 import { collection, doc, getDoc } from "firebase/firestore";
 
@@ -79,9 +79,10 @@ export default function RegisterWriterInfo(props: RegisterWriterinfoProps) {
             <TextField
               {...inputValue("penName", "penName", "text", "筆名", penNameRef)
                 .input}
+              size="small"
               placeholder="INZEI TARO"
-              required
               fullWidth
+              required
             />
           </Grid>
           <Grid item xs={12} md={12}>
@@ -93,9 +94,10 @@ export default function RegisterWriterInfo(props: RegisterWriterinfoProps) {
                 "実名",
                 writerNameRef
               ).input}
+              size="small"
+              fullWidth
               placeholder="印税太郎"
               required
-              fullWidth
             />
           </Grid>
           <Grid item xs={12} md={12}>
@@ -107,6 +109,7 @@ export default function RegisterWriterInfo(props: RegisterWriterinfoProps) {
                 "フリガナ",
                 furiganaRef
               ).input}
+              size="small"
               placeholder="インゼイタロウ"
               helperText="実名のフリガナを入力してください"
               required
@@ -122,6 +125,7 @@ export default function RegisterWriterInfo(props: RegisterWriterinfoProps) {
                 "所属事務所",
                 companyNameRef
               ).input}
+              size="small"
               helperText="所属事務所がある場合は入力してください"
               fullWidth
             />
@@ -135,6 +139,7 @@ export default function RegisterWriterInfo(props: RegisterWriterinfoProps) {
                 "振込口座",
                 bankNameRef
               ).input}
+              size="small"
               placeholder="○○銀行"
               required
               fullWidth
@@ -149,19 +154,18 @@ export default function RegisterWriterInfo(props: RegisterWriterinfoProps) {
                 "支店名",
                 branchNameRef
               ).input}
+              size="small"
               placeholder="○○支店"
               required
               fullWidth
             />
           </Grid>
-          <Grid container justifyContent="center" mt={5}>
-            <Box ml={1}>
-              <Button type="submit" variant="contained" fullWidth>
-                取引先出版社登録へ
-              </Button>
-            </Box>
-          </Grid>
         </Grid>
+        <Box margin="24px auto" width={{ xs: "100%", sm: "32%", md: "45%" }}>
+          <Button type="submit" variant="contained" fullWidth>
+            取引先出版社登録へ
+          </Button>
+        </Box>
       </form>
     </>
   );

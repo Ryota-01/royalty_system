@@ -9,17 +9,21 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Box, Typography } from "@mui/material";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
 type PublisherData = {
-  furigana: string,
-  publisherName: string,
-  contact: string
+  フリガナ: string,
+  出版社名: string,
+  連絡先: string,
+  WEB明細: boolean
 }
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    textAlign: "center"
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -40,7 +44,7 @@ export default function PublishersListItem() {
   useEffect(() => {
     const fetchPulishers = async () => {
       try {
-        const publishersCollectionRef = collection(db, "出版社一覧");
+        const publishersCollectionRef = collection(db, "publishers");
         const getPublisherItem = await getDocs(publishersCollectionRef);
         const getPublisherData: any = getPublisherItem.docs.map((doc) => doc.data());
         setPublisherData(getPublisherData);
@@ -49,24 +53,33 @@ export default function PublishersListItem() {
       }
     }
     fetchPulishers();
-  }, [publisherData])
+  }, []);
+  console.log(publisherData)
   return (
     <>
       <TableContainer>
-        <Table sx={{ width: {xs: "95%", md: "80%"}, margin: "20px auto", padding: "0 12px" }} aria-label="customized table">
+        <Table sx={{ width: { xs: "95%", md: "80%" }, margin: "20px auto", padding: "0 12px" }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>出版社名</StyledTableCell>
               <StyledTableCell>フリガナ</StyledTableCell>
+              <StyledTableCell sx={{ textAlign: "center" }}>WEB明細</StyledTableCell>
               <StyledTableCell>連絡先</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {publisherData.length > 0 && publisherData.map((publisher, index) => (
-              <StyledTableRow key={publisher.publisherName}>
-                <StyledTableCell >{publisher.publisherName}</StyledTableCell>
-                <StyledTableCell >{publisher.furigana}</StyledTableCell>
-                <StyledTableCell >{publisher.contact}</StyledTableCell>
+              <StyledTableRow key={index}>
+                <StyledTableCell >{publisher.出版社名}</StyledTableCell>
+                <StyledTableCell >{publisher.フリガナ}</StyledTableCell>
+                <StyledTableCell sx={{ textAlign: "center" }}>
+                  {publisher.WEB明細 === true ? (
+                    <CheckBoxIcon />
+                  ) : (
+                    <CheckBoxOutlineBlankIcon />
+                  )}
+                </StyledTableCell>
+                <StyledTableCell >{publisher.連絡先}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
