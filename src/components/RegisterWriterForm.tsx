@@ -51,14 +51,14 @@ export default function RegisterWriterForm() {
           ))}
         </Stepper>
       </Box>
-      {isCheckedError ? (
-        <Box sx={{ width: "100%" }} mb={5}>
-          <ErrorBasicAlert message={errorMessage} />
-        </Box>
-      ) : (
-        <></>
-      )}
       <Box sx={{ width: { xs: "95%", md: "60%" }, margin: "20px auto" }}>
+        {isCheckedError ? (
+          <Box sx={{ width: "100%" }} mb={5}>
+            <ErrorBasicAlert message={errorMessage} />
+          </Box>
+        ) : (
+          <></>
+        )}
         {activeStep === 0 &&
           <RegisterWriterInfo
             setActiveStep={setActiveStep}
