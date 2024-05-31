@@ -29,7 +29,7 @@ export default function HomeMenuComponent() {
         { titleEn: "Publishers", titleJa: "出版社一覧", pathName: "/publishers" },
       ],
       statement: [
-        { titleEn: "Create Statement", titleJa: "明細書作成", pathName: "/royaltystatementinput" },
+        { titleEn: "Create Statement", titleJa: "明細書作成", pathName: "/royaltystatementlists" },
       ]
     }
   ]

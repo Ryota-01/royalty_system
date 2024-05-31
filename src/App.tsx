@@ -6,6 +6,7 @@ import RegisterPublisher from './pages/RegisterPublisher';
 import RegisterWriter from './pages/RegisterWriter';
 import WritersList from './pages/WritersList';
 import CreateRoyaltyStatement from './pages/CreateRoyaltyStatement';
+import RoyaltyStatementsLists from './pages/RoyaltyStatementsLists';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/writerregister" element={<RegisterWriter />} />
         <Route path="/writers" element={<WritersList />} />
         <Route path="/royaltystatementinput" element={<CreateRoyaltyStatement />} />
+        <Route path="/royaltystatementlists" element={<RoyaltyStatementsLists />} />
       </Routes>
     </div>
   );

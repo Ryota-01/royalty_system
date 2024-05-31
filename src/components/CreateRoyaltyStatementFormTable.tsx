@@ -84,14 +84,14 @@ export default function CreateRoyaltyStatementFormTable(props: CreateRoyaltyStat
         remarks: remarksRef.current?.value,
       };
       console.log(value);
-      const termsDocRef = doc(db, "明細書一式", "2024年1期");
+      const termsDocRef = doc(db, "statements", "2024年");
       const subCollectionRef = collection(termsDocRef, `${value.writer}`);
       const newDocRef = doc(subCollectionRef, "明細書");
       const docSnap = await getDoc(newDocRef);
       if (!docSnap.exists()) {
         // 同一名のドキュメントが存在しない場合の処理
         await setDoc(newDocRef, value);
-        console.log("Success");
+        alert("明細情報を作成しました。")
       } else {
         setIsCheckedError(true);
         setErrorMessage("すでに明細情報が存在しています。");
@@ -253,6 +253,7 @@ export default function CreateRoyaltyStatementFormTable(props: CreateRoyaltyStat
                       id="publisher"
                       placeholder="取引先出版社"
                       style={inputWithholdingTaxFormStyle.input}
+                      required
                     />
                   </td>
                   <td style={inputWithholdingTaxFormStyle.td}>
@@ -284,6 +285,7 @@ export default function CreateRoyaltyStatementFormTable(props: CreateRoyaltyStat
                       type="tel"
                       placeholder="発生額"
                       style={inputWithholdingTaxFormStyle.input}
+                      required
                     />
                   </td>
                   <td style={{ ...inputWithholdingTaxFormStyle.td, padding: "0 14px" }}>
@@ -297,6 +299,7 @@ export default function CreateRoyaltyStatementFormTable(props: CreateRoyaltyStat
                       type="tel"
                       placeholder="消費税"
                       style={inputWithholdingTaxFormStyle.input}
+                      required
                     />
                   </td>
                   <td style={{ ...inputWithholdingTaxFormStyle.td, padding: "0 14px" }}>
@@ -310,6 +313,7 @@ export default function CreateRoyaltyStatementFormTable(props: CreateRoyaltyStat
                       type="tel"
                       placeholder="源泉徴収税額"
                       style={inputWithholdingTaxFormStyle.input}
+                      required
                     />
                   </td>
                   <td style={{ ...inputWithholdingTaxFormStyle.td, padding: "0 14px" }}>
@@ -323,6 +327,7 @@ export default function CreateRoyaltyStatementFormTable(props: CreateRoyaltyStat
                       type="tel"
                       placeholder="差引金額"
                       style={inputWithholdingTaxFormStyle.input}
+                      required
                     />
                   </td>
                   <td style={{ ...inputWithholdingTaxFormStyle.td, padding: "0 14px" }}>
@@ -336,6 +341,7 @@ export default function CreateRoyaltyStatementFormTable(props: CreateRoyaltyStat
                       type="tel"
                       placeholder="マネジメント料"
                       style={inputWithholdingTaxFormStyle.input}
+                      required
                     />
                   </td>
                   <td style={{ ...inputWithholdingTaxFormStyle.td, padding: "0 14px" }}>
@@ -349,6 +355,7 @@ export default function CreateRoyaltyStatementFormTable(props: CreateRoyaltyStat
                       type="tel"
                       placeholder="振込金額"
                       style={inputWithholdingTaxFormStyle.input}
+                      required
                     />
                   </td>
                 </tr>
@@ -356,7 +363,6 @@ export default function CreateRoyaltyStatementFormTable(props: CreateRoyaltyStat
                   <td colSpan={4} style={{ ...inputWithholdingTaxFormStyle.td }}>
                     <input
                       {...register(`createRoyaltyStatementForm.${index}.備考` as const, {
-                        required: true
                       })}
                       ref={remarksRef}
                       name="remarks"
