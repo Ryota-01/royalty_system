@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import { Box, Typography } from "@mui/material";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 
 type PublisherData = {
   フリガナ: string,
@@ -39,7 +40,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-export default function PublishersListItem() {
+export default function PublishersListTable() {
   const [publisherData, setPublisherData] = useState<PublisherData[]>([]);
   useEffect(() => {
     const fetchPulishers = async () => {
@@ -74,9 +75,9 @@ export default function PublishersListItem() {
                 <StyledTableCell >{publisher.フリガナ}</StyledTableCell>
                 <StyledTableCell sx={{ textAlign: "center" }}>
                   {publisher.WEB明細 === true ? (
-                    <CheckBoxIcon />
+                    <CheckOutlinedIcon />
                   ) : (
-                    <CheckBoxOutlineBlankIcon />
+                    <></>
                   )}
                 </StyledTableCell>
                 <StyledTableCell >{publisher.連絡先}</StyledTableCell>

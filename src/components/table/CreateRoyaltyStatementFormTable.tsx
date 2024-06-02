@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { Box, Button } from "@mui/material";
 

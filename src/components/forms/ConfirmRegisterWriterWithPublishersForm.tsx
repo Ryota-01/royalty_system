@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
 type RegisterWriterData = {

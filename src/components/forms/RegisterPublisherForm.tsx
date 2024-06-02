@@ -1,8 +1,8 @@
 import React, { RefObject, useRef, useState } from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from "@mui/material";
-import { ErrorBasicAlert } from "./BasicAlert";
+import { ErrorBasicAlert } from "../alert/BasicAlert";
 import { useNavigate } from "react-router-dom";
 
 export default function RegisterPublisherForm() {

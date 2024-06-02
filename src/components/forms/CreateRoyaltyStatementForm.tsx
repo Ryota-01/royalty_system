@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { ErrorBasicAlert, InfoBasicAlert } from "./BasicAlert";
-import CreateRoyaltyStatementFormTable from "./CreateRoyaltyStatementFormTable";
+import { ErrorBasicAlert, InfoBasicAlert } from "../alert/BasicAlert";
+import CreateRoyaltyStatementFormTable from "../table/CreateRoyaltyStatementFormTable";
 
 export default function CreateRoyaltyStatementForm() {
   const [errorMessage, setErrorMessage] = useState("");

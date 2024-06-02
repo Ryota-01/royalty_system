@@ -1,6 +1,6 @@
 import React, { RefObject, useRef } from "react";
 import { Box, Button, Divider, Grid, TextField, Typography } from "@mui/material";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, doc, getDoc } from "firebase/firestore";
 
 type RegisterWriterinfoProps = {

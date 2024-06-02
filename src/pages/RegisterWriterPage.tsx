@@ -1,11 +1,10 @@
-import React, { RefObject, useRef, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import React, { useState } from "react";
+import Header from "../components/Header";
 import { Box, Grid, Step, StepLabel, Stepper } from "@mui/material";
-import { ErrorBasicAlert, WarningBasicAlert } from "./BasicAlert";
-import { useNavigate } from "react-router-dom";
-import RegisterWriterInfo from "./RegisterWriterInfo";
-import RegisterWriterWithPublishers from "./RegisterWriterWithPublishers";
-import ConfirmRegisterWriterWithPublishers from "./ConfirmRegisterWriterWithPublishers";
+import { ErrorBasicAlert } from "../components/alert/BasicAlert";
+import RegisterWriterInfoForm from "../components/forms/RegisterWriterInfoForm";
+import RegisterWriterWithPublishersForm from "../components/forms/RegisterWriterWithPublishersForm";
+import ConfirmRegisterWriterWithPublishersForm from "../components/forms/ConfirmRegisterWriterWithPublishersForm";
 
 type RegisterWriterData = {
   筆名?: string;
@@ -21,7 +20,7 @@ type RegisterPublisherData = {
   マネジメント料率?: string;
 }
 
-export default function RegisterWriterForm() {
+export default function RegisterWriterPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isCheckedError, setIsCheckedError] = useState<boolean>(false);
   const [registerWriterData, setRegisterWriterData] = useState<RegisterWriterData>({
@@ -42,6 +41,7 @@ export default function RegisterWriterForm() {
 
   return (
     <>
+      <Header title="Writer Register" discription="作家情報の登録ページ" />
       <Box width="60%" margin="30px auto">
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
@@ -60,7 +60,7 @@ export default function RegisterWriterForm() {
           <></>
         )}
         {activeStep === 0 &&
-          <RegisterWriterInfo
+          <RegisterWriterInfoForm
             setActiveStep={setActiveStep}
             setIsCheckedError={setIsCheckedError}
             setErrorMessage={setErrorMessage}
@@ -68,7 +68,7 @@ export default function RegisterWriterForm() {
           />
         }
         {activeStep === 1 &&
-          <RegisterWriterWithPublishers
+          <RegisterWriterWithPublishersForm
             setActiveStep={setActiveStep}
             setIsCheckedError={setIsCheckedError}
             setErrorMessage={setErrorMessage}
@@ -77,7 +77,7 @@ export default function RegisterWriterForm() {
           />
         }
         {activeStep === 2 &&
-          <ConfirmRegisterWriterWithPublishers
+          <ConfirmRegisterWriterWithPublishersForm
             setActiveStep={setActiveStep}
             setIsCheckedError={setIsCheckedError}
             setErrorMessage={setErrorMessage}
@@ -93,6 +93,7 @@ export default function RegisterWriterForm() {
         >
         </Grid>
       </Box >
+      {/* <RegisterWriterFormPage /> */}
     </>
-  );
+  )
 }

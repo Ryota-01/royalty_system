@@ -1,12 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
-import PublishersList from './pages/PublishersList';
-import RegisterPublisher from './pages/RegisterPublisher';
-import RegisterWriter from './pages/RegisterWriter';
-import WritersList from './pages/WritersList';
-import CreateRoyaltyStatement from './pages/CreateRoyaltyStatement';
+import PublishersListPage from './pages/PublishersListPage';
+import RegisterPublisherPage from './pages/RegisterPublisherPage';
+import RegisterWriterPage from './pages/RegisterWriterPage';
+import WritersListPage from './pages/WritersListPage';
+import CreateRoyaltyStatementPage from './pages/CreateRoyaltyStatementPage';
 import RoyaltyStatementsLists from './pages/RoyaltyStatementsLists';
+import PeriodStatementPage from './pages/PeriodStatementPage';
+import DetailAuthorStatementPage from './pages/DetailAuthorStatementPage';
 
 function App() {
   return (
@@ -14,12 +16,14 @@ function App() {
       <Routes>
         <Route path="/*" element={<Home />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/publishers" element={<PublishersList />} />
-        <Route path="/publisherregister" element={<RegisterPublisher />} />
-        <Route path="/writerregister" element={<RegisterWriter />} />
-        <Route path="/writers" element={<WritersList />} />
-        <Route path="/royaltystatementinput" element={<CreateRoyaltyStatement />} />
+        <Route path="/publishers" element={<PublishersListPage />} />
+        <Route path="/publisherregister" element={<RegisterPublisherPage />} />
+        <Route path="/writerregister" element={<RegisterWriterPage />} />
+        <Route path="/writers" element={<WritersListPage />} />
+        <Route path="/royaltystatementinput" element={<CreateRoyaltyStatementPage />} />
         <Route path="/royaltystatementlists" element={<RoyaltyStatementsLists />} />
+        <Route path="/royaltystatementlists/:period" element={<PeriodStatementPage />} />
+        <Route path="/royaltystatementlists/:period/:period" element={<DetailAuthorStatementPage />} />
       </Routes>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -48,7 +48,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-export default function WritersListItem() {
+export default function WritersListTable() {
   const [writersData, setWritersData] = useState<WriterData[]>([]);
   useEffect(() => {
     const fetchWriters = async () => {
